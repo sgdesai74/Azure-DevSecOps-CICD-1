@@ -54,16 +54,18 @@ stages:
         pool:
           vmImage: 'ubuntu-latest'
         steps:
-          - task: SonarCloudPrepare@1
+          - task: SonarCloudPrepare@3
             inputs:
               SonarCloud: 'SonarCloudConnection'
               organization: 'sgdesai007'
+              scannerMode: 'CLI'
+              configMode: 'manual'
               projectKey: 'sgdesai007_CICD_BulletProof'
               projectName: 'CICD_BulletProof'
  
-          - task: SonarCloudAnalyze@1
+          - task: SonarCloudAnalyze@3
            
-          - task: SonarCloudPublish@1
+          - task: SonarCloudPublish@3
             inputs:
               pollingTimeoutSec: '300'
  
