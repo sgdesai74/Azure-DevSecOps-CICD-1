@@ -1,0 +1,22 @@
+
+from flask import Flask, jsonify
+app = Flask(__name__)
+ 
+@app.route('/')
+def home():
+    return jsonify({
+        'message': 'Welcome to FinOps App',
+        'status': 'healthy'
+    })
+ 
+@app.route('/health')
+def health():
+    return jsonify({'status': 'ok'}), 200
+ 
+@app.route('/api/calculate')
+def calculate():
+    result = 10 + 20
+    return jsonify({'result': result})
+ 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
