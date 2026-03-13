@@ -5,7 +5,7 @@ trigger:
  
 variables:
   pythonVersion: '3.10'
-  azureSubscription: 'dec007ef-32c1-476f-91a1-211ab6d11d79'
+  azureSubscription: 'subscription1'
   webAppName: 'finops-web-app-myapp'
  
 stages:
