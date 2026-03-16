@@ -25,13 +25,29 @@ stages:
  
           - script: |
               cd app
-              pip install -r app/requirements.txt
-              # We run from the root so that 'import app' works correctly
-              export PYTHONPATH=$PYTHONPATH:$(pwd)/app
-              python3 -m pytest app/tests/ --junitxml=reports/test-results.xml
-             # pytest tests/ --junitxml=../reports/test-results.xml
+              echo "--- Current Directory Content ---"
+              ls -R
+              # 1. Determine where requirements.txt actually is
+              if [ -f "requirements.txt" ]; then
+                REQ_PATH="requirements.txt"
+                export PYTHONPATH=$PYTHONPATH:$(pwd)/..
+              elif [ -f "app/requirements.txt" ]; then
+                REQ_PATH="app/requirements.txt"
+                export PYTHONPATH=$PYTHONPATH:$(pwd)
+              else
+                echo "Error: Could not find requirements.txt"
+                exit 1
+              fi
+              # 2. Install dependencies
+              python3 -m pip install --upgrade pip
+              python3 -m pip install -r $REQ_PATH
+              python3 -m pip install pytest pytest-flask
+
+              # 3. Run tests using the module approach
+              # We use '.' to tell pytest to look in the current folder and subfolders
+              python3 -m pytest . --junitxml=$(Build.SourcesDirectory)/reports/test-results.xml
             displayName: 'Run Unit Tests'
- 
+            
           - task: PublishTestResults@2
             condition: always()
             inputs:
