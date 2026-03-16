@@ -43,6 +43,7 @@ stages:
               # We use '.' to tell pytest to look in the current folder and subfolders
               python3 -m pytest . --junitxml=$(Build.SourcesDirectory)/reports/test-results.xml
             displayName: 'Run Unit Tests'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/app'
             
           - task: PublishTestResults@2
             condition: always()
