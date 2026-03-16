@@ -25,7 +25,7 @@ stages:
  
           - script: |
               cd app
-              pip install -r requirements.txt
+              pip install -r app/requirements.txt
               # We run from the root so that 'import app' works correctly
               export PYTHONPATH=$PYTHONPATH:$(pwd)/app
               python3 -m pytest app/tests/ --junitxml=reports/test-results.xml
